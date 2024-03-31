@@ -4,6 +4,7 @@ import com.example.securityjwtrestapijson.dto.LoginRequest;
 import com.example.securityjwtrestapijson.dto.RegisterRequest;
 import com.example.securityjwtrestapijson.response.ApiResponse;
 import com.example.securityjwtrestapijson.response.error.ErrorCode;
+import com.example.securityjwtrestapijson.security.JwtProperties;
 import com.example.securityjwtrestapijson.service.AuthService;
 import com.example.securityjwtrestapijson.util.Constants;
 import lombok.RequiredArgsConstructor;
@@ -18,20 +19,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/auth")
 public class AuthController {
     private final AuthService authService;
+    private final JwtProperties properties;
 
     @PostMapping("/login")
     public ApiResponse login(@RequestBody @Validated LoginRequest request){
 
-        String token = authService.attemptLogin(request.getProvider(), request.getProviderId(), request.getEmail(), request.getPassword());
+//        String token = authService.attemptLogin(request.getProvider(), request.getProviderId(), request.getEmail(), request.getPassword());
+        String token = authService.attemptLogin(request.getProvider(), request.getProviderId(), request.getEmail(), properties.getPassword());
 
-        if (token.startsWith("kakao")) {
-            return ApiResponse.ok(token);
-        }
-        else if (token.startsWith("apple")) {
-            return ApiResponse.ok(token);
-        } else {
+        if (token.startsWith("[ERROR]")) {
             return ApiResponse.failure(ErrorCode.NON_EXISTENT_EMAIL);
         }
+        return ApiResponse.ok(token);
     }
 
     @PostMapping("/registerUser")

@@ -11,8 +11,8 @@ public class Constants {
 
     // 로그인 시 메세지
     public static final String LOGIN_SUCCESS_MESSAGE = "로그인 성공"; //0
-    public static final String LOGIN_ERROR_MESSAGE = "로그인 실패"; //55000
-    public static final String INVALID_USERNAME_OR_PASSWORD_MESSAGE = "잘못된 아이디 또는 비밀번호"; //5600
-    public static final String NON_EXISTENT_EMAIL = "존재하지 않는 이메일"; //5202
+    public static final String LOGIN_ERROR_MESSAGE = "[ERROR]로그인 실패"; //55000
+    public static final String INVALID_USERNAME_OR_PASSWORD_MESSAGE = "[ERROR]잘못된 아이디 또는 비밀번호"; //5600
+    public static final String NON_EXISTENT_EMAIL = "[ERROR]존재하지 않는 이메일"; //5202
 }
 

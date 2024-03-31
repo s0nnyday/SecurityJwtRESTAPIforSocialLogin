@@ -6,10 +6,12 @@ import com.example.securityjwtrestapijson.repository.UserRepository;
 import com.example.securityjwtrestapijson.response.error.ErrorCode;
 import com.example.securityjwtrestapijson.security.CustomUserDetails;
 import com.example.securityjwtrestapijson.security.JwtIssuer;
+import com.example.securityjwtrestapijson.security.JwtProperties;
 import com.example.securityjwtrestapijson.util.Constants;
 import com.example.securityjwtrestapijson.util.ValidationUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -28,6 +30,7 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtIssuer jwtIssuer;
     private final AuthenticationManager authenticationManager;
+    private final JwtProperties properties;
 
     public String attemptLogin(String provider, String providerId, String email, String password) {
 
@@ -66,7 +69,7 @@ public class AuthService {
         }
     }
 
-//    public Object attemptLogin(String provider, String providerId, String email, String password) {
+    //    public Object attemptLogin(String provider, String providerId, String email, String password) {
 //
 //        String username = provider + providerId;
 //        log.info("[Slf4j]Username: " + username);
@@ -120,9 +123,8 @@ public class AuthService {
 //                    .build();
 //        }
 //    }
-
-
     public Object registerUser(RegisterRequest request) {
+
         try {
             //예외 처리
             if (!ValidationUtil.isValidEmail(request.getEmail())) {
@@ -133,7 +135,7 @@ public class AuthService {
                         .build();
             }
 
-            if (!ValidationUtil.isValidPassword(request.getPassword())) {
+            if (!ValidationUtil.isValidPassword(properties.getPassword())) {
                 return RegisterErrorResponse.builder()
                         .status(400)
                         .success(false)
@@ -152,7 +154,7 @@ public class AuthService {
             //회원 등록 시작
             //TODO request로 provider, providerId,이름, 이메일, 가짜 비밀번호 받기
             String username = request.getProvider()+request.getProviderId();
-            UserEntity newUser = UserEntity.createUser(username, request.getName(),request.getEmail(), passwordEncoder.encode(request.getPassword()));
+            UserEntity newUser = UserEntity.createUser(username, request.getName(),request.getEmail(), passwordEncoder.encode(properties.getPassword()));
 
             userRepository.save(newUser);
 
@@ -177,5 +179,7 @@ public class AuthService {
                     .build();
         }
     }
+
+
 
 }
