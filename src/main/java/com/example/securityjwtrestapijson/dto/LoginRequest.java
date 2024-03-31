@@ -13,5 +13,5 @@ public class LoginRequest {
     private String provider;
     private String providerId;
     private String email;
-    private String password;
+//    private String password; 가짜 비밀번호로 대체
 }

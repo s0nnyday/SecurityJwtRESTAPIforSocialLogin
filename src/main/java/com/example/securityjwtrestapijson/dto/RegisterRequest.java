@@ -14,5 +14,5 @@ public class RegisterRequest {
     private String providerId;
     private String name;
     private String email;
-    private String password;
+//    private String password; 가짜 비밀번호로 대체
 }
