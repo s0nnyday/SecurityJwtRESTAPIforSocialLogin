@@ -19,7 +19,8 @@ public class UserEntity {
     private long id;
 
     @Column(unique = true, nullable = false)
-    private String username; // provider + providerId
+    private String username; // provider + providerId 정규화
+    private String name;
     private String email;
 
     @Enumerated(EnumType.STRING)
@@ -30,9 +31,10 @@ public class UserEntity {
 
 
     //==생성 메서드==//
-    public static UserEntity createUser(String username, String email, String password) {
+    public static UserEntity createUser(String username, String name, String email, String password) {
         UserEntity userEntity = new UserEntity();
         userEntity.setUsername(username);
+        userEntity.setName(name);
         userEntity.setEmail(email);
         userEntity.setUserRole(UserRole.ROLE_USER);
         userEntity.setPassword(password);

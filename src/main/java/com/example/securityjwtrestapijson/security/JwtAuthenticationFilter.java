@@ -26,7 +26,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 .map(jwtToPrincipalConverter::convert) // 가져온 사용자 정보를 CustomUserDetails 객체로 변환, 생성
                 .map(UserPrincipalAuthenticationToken::new) // UserPrincipalAuthenticationToken을 생성하여 인증된 사용자로 설정
                         .ifPresent(authentication -> SecurityContextHolder.getContext().setAuthentication(authentication));
-        // 앞에 UPAT 객체가 존재하면, 즉 토큰 검증,사용자 인증 성공했을 때 -> SecurityContextHolder에 현재 스레드에 대한 인증 객체를 설정
+        // 앞에 UserPrincipalAuthenticationToken 객체가 존재하면, 즉 토큰 검증,사용자 인증 성공했을 때 -> SecurityContextHolder에 현재 스레드에 대한 인증 객체를 설정
         // 이를 통해 사용자에 대한 정보 얻기
 
         filterChain.doFilter(request, response);
