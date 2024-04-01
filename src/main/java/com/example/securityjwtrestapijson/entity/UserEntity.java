@@ -21,6 +21,7 @@ public class UserEntity {
     @Column(unique = true, nullable = false)
     private String username; // provider + providerId 정규화
     private String name;
+    @Column(unique = true, nullable = false)
     private String email;
 
     @Enumerated(EnumType.STRING)
@@ -28,7 +29,6 @@ public class UserEntity {
 
     @JsonIgnore
     private String password;
-
 
     //==생성 메서드==//
     public static UserEntity createUser(String username, String name, String email, String password) {

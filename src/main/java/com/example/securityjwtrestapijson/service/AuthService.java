@@ -39,10 +39,9 @@ public class AuthService {
 
         // 존재하지 않는 이메일
         if (userRepository.findByEmail(email).isEmpty()) {
-            //TODO 401 반환
-
             return Constants.NON_EXISTENT_EMAIL;
         }
+
         // 로그인 시작
         try {
             var authentication = authenticationManager.authenticate(
@@ -58,11 +57,13 @@ public class AuthService {
             var token = jwtIssuer.issue(principal.getUserId(), principal.getEmail(), roles);
             // token 반환
             return token;
-        } catch (BadCredentialsException e) {
+        }
+        catch (BadCredentialsException e) {
             // 잘못된 아이디 또는 비밀번호
             log.error("Login failed: ", e);
             return Constants.INVALID_USERNAME_OR_PASSWORD_MESSAGE;
-        } catch (AuthenticationException e) {
+        }
+        catch (AuthenticationException e) {
             // 로그인 실패 처리
             log.error("Login failed: ", e);
             return Constants.LOGIN_ERROR_MESSAGE;
