@@ -8,4 +8,3 @@ spring:
   jwt:
     secretKey: ${키값 - 256비트 이상}
     password: ${ 가짜 비밀번호 - 대소문자+특수문자+숫자 }
-
